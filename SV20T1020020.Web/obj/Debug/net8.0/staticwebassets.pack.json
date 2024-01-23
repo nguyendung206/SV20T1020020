@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\employees\\me.jpg",
+      "PackagePath": "staticwebassets\\images\\employees\\me.jpg"
+    },
+    {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\products\\s24ultra.jpeg",
+      "PackagePath": "staticwebassets\\images\\products\\s24ultra.jpeg"
+    },
+    {
       "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
