@@ -8,5 +8,20 @@ namespace SV20T1020020.Web.Controllers
         {
             return View();
         }
+        public IActionResult Create()
+        {
+            ViewBag.Title = "Bổ sung Nhân viên";
+            return View("Edit");
+        }
+
+        public IActionResult Edit(string id)
+        {
+            ViewBag.Title = "Cập nhật thông tin Nhân viên";
+            return View();
+        }
+        public IActionResult Delete(string id)
+        {
+            return View();
+        }
     }
 }
