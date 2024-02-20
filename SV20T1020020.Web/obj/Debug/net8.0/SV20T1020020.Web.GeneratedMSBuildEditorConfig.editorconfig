@@ -26,6 +26,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\LapTrinhWeb\SV20T1020020\SV20T1020020.Web
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/LapTrinhWeb/SV20T1020020/SV20T1020020.Web/Views/Account/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWNjb3VudFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/LapTrinhWeb/SV20T1020020/SV20T1020020.Web/Views/Category/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2F0ZWdvcnlcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -68,6 +72,26 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/LapTrinhWeb/SV20T1020020/SV20T1020020.Web/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LapTrinhWeb/SV20T1020020/SV20T1020020.Web/Views/Order/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LapTrinhWeb/SV20T1020020/SV20T1020020.Web/Views/Order/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LapTrinhWeb/SV20T1020020/SV20T1020020.Web/Views/Order/EditDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcRWRpdERldGFpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LapTrinhWeb/SV20T1020020/SV20T1020020.Web/Views/Order/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/LapTrinhWeb/SV20T1020020/SV20T1020020.Web/Views/Order/Shipping.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcT3JkZXJcU2hpcHBpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/LapTrinhWeb/SV20T1020020/SV20T1020020.Web/Views/Product/Attribute.cshtml]
