@@ -27,6 +27,16 @@ namespace SV20T1020020.BusinessLayers
             provinceDB = new ProvinceDAL(connectionString);
             customerDB = new CustomerDAL(connectionString);
         }
+
+        /// <summary>
+        /// Danh sách các tỉnh thành
+        /// </summary>
+        /// <returns></returns>
+        public static List<Province> ListOfProvinces()
+        {
+            return provinceDB.List().ToList();
+        }
+
         /// <summary>
         /// Tìm kiếm và lấy danh sách khách hàng
         /// </summary>
@@ -40,6 +50,57 @@ namespace SV20T1020020.BusinessLayers
             rowCount = customerDB.Count(searchValue);
             return customerDB.List(page, pageSize, searchValue).ToList();
         }
+        
+        /// <summary>
+        /// Lấy thông tin của một khách hàng theo id 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Customer? GetCustomer(int id)
+        {
+            return customerDB.Get(id);
+        }
 
+        /// <summary>
+        /// Thêm 1 khách hàng
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        public static int AddCustomer(Customer customer)
+        {
+            return customerDB.Add(customer);
+        }
+
+        /// <summary>
+        /// Cập nhật khách hàng
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        public static bool UpdateCustomer(Customer customer)
+        {
+            return customerDB.Update(customer);
+        }
+
+        /// <summary>
+        /// Xóa 1 khách hàng có mã là id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static bool DeleteCustomer(int id)
+        {
+            if (customerDB.IsUsed(id))
+                return false;
+            return customerDB.Delete(id);
+        }
+
+        /// <summary>
+        /// Kiểm tra xem khách hàng có mã id hiện có dữ liệu liên quan hay không 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static bool IsUsedCustomer(int id)
+        {
+            return customerDB.IsUsed(id);
+        }
     }
 }

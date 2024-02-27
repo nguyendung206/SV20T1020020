@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SV20T1020020.DomainModels.Customer
+@{
     
 }
 
@@ -7,23 +8,23 @@
         <form action="#">
             <div class="form-group">
                 <label>Tên khách hàng:</label>
-                <input type="text" class="form-control" name="CustomerName" autofocus>
+                <input type="text" class="form-control" name="CustomerName" autofocus value="@Model.CustomerName">
             </div>
             <div class="form-group">
                 <label>Tên giao dịch:</label>
-                <input type="text" class="form-control" name="ContactName">
+                <input type="text" class="form-control" name="ContactName" value="@Model.ContactName">
             </div>
             <div class="form-group">
                 <label>Số điện thoại:</label>
-                <input type="text" class="form-control" name="Phone">
+                <input type="text" class="form-control" name="Phone" value="@Model.Phone">
             </div>
             <div class="form-group">
                 <label>Email:</label>
-                <input type="email" class="form-control" name="Email">
+                <input type="email" class="form-control" name="Email" value="@Model.Email">
             </div>
             <div class="form-group">
                 <label>Địa chỉ:</label>
-                <input type="text" class="form-control" name="Address">
+                <input type="text" class="form-control" name="Address" value="@Model.Address">
             </div>
             <div class="form-group">
                 <label>Tỉnh/Thành:</label>

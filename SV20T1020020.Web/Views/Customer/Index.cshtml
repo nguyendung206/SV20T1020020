@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SV20T1020020.DomainModels.Customer>
+﻿@model SV20T1020020.Web.Models.CustomerSearchResult
 @{
     ViewBag.Title = "Quản lý Khách hàng";
 }
@@ -9,7 +9,7 @@
             <!-- Form nhập đầu vào tìm kiếm -->
             <div class="input-group">
                 <input name="searchValue" type="text" class="form-control"
-                       placeholder="Nhập tên khách hàng cần tìm">
+                       placeholder="Nhập tên khách hàng cần tìm" value="@Model.SearchValue">
                 <div class="input-group-btn">
                     <button class="btn btn-info" type="submit">
                         <i class="glyphicon glyphicon-search"></i>
@@ -25,7 +25,7 @@
         <!-- Hiển thị kết quả tìm kiếm -->
         <div>
             <p style="margin: 10px 0 10px 0">
-                Có <strong>@ViewBag.RowCount</strong> khách hàng trong tổng số <strong>@ViewBag.PageCount</strong> trang
+                Có <strong>@Model.RowCount</strong> khách hàng trong tổng số <strong>@Model.PageCount</strong> trang
             </p>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
@@ -42,7 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(var item in Model)
+                        @foreach (var item in Model.Data)
                         {
                             <tr>
                                 <td>@item.CustomerName</td>
@@ -67,11 +67,17 @@
             </div>
             <div class="text-center">
                 <ul class="pagination">
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
+                    @for (int p = 1; p <= Model.PageCount; p++)
+                    {
+                        if (p == Model.Page)
+                        {
+                            <li class="active"><a href="#">@p</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Customer?page=@p&searchValue=@Model.SearchValue">@p</a></li>
+                        }
+                    }
                 </ul>
             </div>
         </div>

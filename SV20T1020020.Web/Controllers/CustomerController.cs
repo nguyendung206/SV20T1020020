@@ -6,39 +6,49 @@ namespace SV20T1020020.Web.Controllers
 {
     public class CustomerController : Controller
     {
+        private const int PAGE_SIZE = 20;
+
         public IActionResult Index(int page = 1, string searchValue = "")
         {
-            int pageSize = 20;
             int rowCount = 0;
-            var data = CommonDataService.ListOfCustomers(out rowCount, page, pageSize, searchValue);
-
-            ViewBag.Page = page;
-            ViewBag.PageSize = pageSize;
-            ViewBag.RowCount = rowCount;
-
-            int pageCount = rowCount / pageSize;
-            if (rowCount %  pageSize > 0 )
+           
+            var data = CommonDataService.ListOfCustomers(out rowCount, page, PAGE_SIZE, searchValue ?? "");
+            
+            var model = new Models.CustomerSearchResult()
             {
-                pageCount += 1;
-            }
-            ViewBag.PageCount = pageCount;
+                Page = page,
+                PageSize = PAGE_SIZE,
+                SearchValue = searchValue ?? "",
+                RowCount = rowCount,
+                Data = data
+            };
 
-            return View(data);
+            return View(model);
         }
 
-        public IActionResult Create() 
+        public IActionResult Create()
         {
             ViewBag.Title = "Bổ sung Khách hàng";
-            return View("Edit");
+            Customer model = new Customer()
+            {
+                CustomerId = 0,
+            };
+            return View("Edit", model);
         }
 
-        public IActionResult Edit(string id)
+        public IActionResult Edit(int id = 0)
         {
             ViewBag.Title = "Cập nhật thông tin Khách hàng";
-            return View();
+            Customer? model = CommonDataService.GetCustomer(id);
+            if (model == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
 
-        public IActionResult Delete(string id)
+        public IActionResult Delete(int id = 0)
         {
             return View();
         }

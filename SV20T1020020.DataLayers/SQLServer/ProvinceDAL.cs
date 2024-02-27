@@ -42,7 +42,14 @@ namespace SV20T1020020.DataLayers.SQLServer
 
         public IList<Province> List(int page = 1, int pageSize = 0, string searchValue = "")
         {
-            throw new NotImplementedException();
+            List<Province> list = new List<Province>();
+            using (var connection = OpenConnection())
+            {
+                var sql = @"select * from Provinces";
+                connection.Query<Province>(sql).ToList();
+                connection.Close();
+            }
+            return list;
         }
 
         public bool Update(Province data)
