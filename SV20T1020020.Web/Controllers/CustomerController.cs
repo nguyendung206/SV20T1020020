@@ -48,9 +48,44 @@ namespace SV20T1020020.Web.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public IActionResult Save(Customer data)
+        {
+            try
+            {
+                if (data.CustomerId == 0)
+                {
+                    int id = CommonDataService.AddCustomer(data);
+                }
+                else
+                {
+                    bool result = CommonDataService.UpdateCustomer(data);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+
         public IActionResult Delete(int id = 0)
         {
-            return View();
+            if(Request.Method == "POST")
+            {
+                CommonDataService.DeleteCustomer(id);
+                return RedirectToAction("Index");
+            }
+
+            var model = CommonDataService.GetCustomer(id);
+            if (model == null)
+            {
+                return View("Index");
+            }
+
+            ViewBag.AllowDelete = !CommonDataService.IsUsedCustomer(id);
+
+            return View(model);
         }
     }
 }

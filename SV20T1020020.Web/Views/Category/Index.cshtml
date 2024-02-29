@@ -1,14 +1,15 @@
-﻿@{
+﻿@model SV20T1020020.Web.Models.CategorySearchResult
+@{
     ViewBag.Title = "Quản lý Loại hàng";
 }
 
 <div class="box box-primary">
     <div class="box-body">
-        <form id="formSearch" action="#">
+        <form id="formSearch" action="~/Category">
             <!-- Form nhập đầu vào tìm kiếm -->
             <div class="input-group">
                 <input name="searchValue" type="text" class="form-control"
-                       placeholder="Nhập tên loại hàng cần tìm">
+                       placeholder="Nhập tên loại hàng cần tìm" value="@Model.SearchValue">
                 <div class="input-group-btn">
                     <button class="btn btn-info" type="submit">
                         <i class="glyphicon glyphicon-search"></i>
@@ -36,16 +37,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 1; i <= 10; i++)
+                        @foreach (var item in Model.Data)
                         {
                             <tr>
-                                <td>Điện gia dụng</td>
-                                <td>Các mặt hàng điện gia dụng</td>
+                                <td>@item.CategoryName</td>
+                                <td>@item.Description</td>
                                 <td class="text-center">
-                                    <a href="~/Category/Edit/123" class="btn btn-info btn-xs">
+                                    <a href="~/Category/Edit/@item.CategoryId" class="btn btn-info btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="~/Category/Delete/123" class="btn btn-danger btn-xs">
+                                    <a href="~/Category/Delete/@item.CategoryId" class="btn btn-danger btn-xs">
                                         <i class="fa fa-remove"></i>
                                     </a>
                                 </td>
@@ -56,11 +57,17 @@
             </div>
             <div class="text-center">
                 <ul class="pagination">
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
+                    @for (int p = 1; p <= Model.PageCount; p++)
+                    {
+                        if (p == Model.Page)
+                        {
+                            <li class="active"><a href="#">@p</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Category?page=@p&searchValue=@Model.SearchValue">@p</a></li>
+                        }
+                    }
                 </ul>
             </div>
         </div>

@@ -1,46 +1,47 @@
-﻿@{
+﻿@model SV20T1020020.DomainModels.Customer
+@{
     ViewBag.Title = "Xóa Khách hàng";
 }
-@{
-
-}
-
 <div class="box box-danger">
     <div class="box-body">
-        <form action="#">
+        <form action="~/Customer/Delete/@Model.CustomerId" method="post">
             <div class="form-group">
                 <label>Tên khách hàng:</label>
-                <p class="form-control-static">Nguyễn Mai Dũng</p>
+                <p class="form-control-static">@Model.CustomerName</p>
             </div>
             <div class="form-group">
                 <label>Tên giao dịch:</label>
-                <p class="form-control-static">Ông Dũng</p>
+                <p class="form-control-static">@Model.ContactName</p>
             </div>
             <div class="form-group">
                 <label>Số điện thoại:</label>
-                <p class="form-control-static">0898188781</p>
+                <p class="form-control-static">@Model.Phone</p>
             </div>
             <div class="form-group">
                 <label>Email:</label>
-                <p class="form-control-static">nmd@gmail.com</p>
+                <p class="form-control-static">@Model.Email</p>
             </div>
             <div class="form-group">
                 <label>Địa chỉ:</label>
-                <p class="form-control-static">6 Lê Đức Toàn</p>
+                <p class="form-control-static">@Model.Address</p>
             </div>
             <div class="form-group">
                 <label>Tỉnh/Thành:</label>
-                <p class="form-control-static">Huế</p>
+                <p class="form-control-static">@Model.Province</p>
             </div>
             <div class="form-group">
                 <label>Trạng thái:</label>
-                <p class="form-control-static">Tài khoản đang hoạt động</p>
+                <p class="form-control-static">@(@Model.IsLocked ? "Tài khoản bị khóa" : "Tài khoản đang hoạt động")</p>
             </div>
             <div class="form-group text-right">
-                <button type="submit" class="btn btn-danger">
-                    <i class="fa fa-trash-o"></i>
-                    Xác nhận xóa
-                </button>
+                @if (ViewBag.AllowDelete)
+                {
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fa fa-trash-o"></i>
+                        Xác nhận xóa
+                    </button>
+
+                }
                 <a href="~/Customer" class="btn btn-default">Quay lại</a>
             </div>
         </form>

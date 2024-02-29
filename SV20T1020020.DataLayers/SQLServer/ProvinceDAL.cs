@@ -20,7 +20,7 @@ namespace SV20T1020020.DataLayers.SQLServer
             throw new NotImplementedException();
         }
 
-        public int Count(string serchValue = "")
+        public int Count(string searchValue = "")
         {
             throw new NotImplementedException();
         }
@@ -46,7 +46,7 @@ namespace SV20T1020020.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var sql = @"select * from Provinces";
-                connection.Query<Province>(sql).ToList();
+                list = connection.Query<Province>(sql).ToList();
                 connection.Close();
             }
             return list;

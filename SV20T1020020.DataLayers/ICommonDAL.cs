@@ -25,7 +25,7 @@ namespace SV20T1020020.DataLayers
         /// </summary>
         /// <param name="serchValue"> Giá trị cần tìm kiếm (chuỗi rỗng nếu lấy toàn bộ dữ liệu) </param>
         /// <returns></returns>
-        int Count(string serchValue = "");
+        int Count(string searchValue = "");
 
         /// <summary>
         /// Bổ sung dữ liệu vào csdl. Hàm trả về ID của dữ liệu bổ sung 
