@@ -6,6 +6,7 @@
 <div class="box box-primary">
     <div class="box-body">
         <form class="form-horizontal" method="post" enctype="multipart/form-data" action="~/Employee/Save">
+            <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
             <div class="form-group">
                 <label class="control-label col-sm-2">Họ và tên:</label>
                 <div class="col-sm-10">
@@ -16,7 +17,8 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Ngày sinh:</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" name="BirthDate" value="@Model.BirthDate"/>
+                    <input type="hidden" name="BirthDate" value="@Model.BirthDate" />
+                    <input type="text" class="form-control date-picker" name="BirthDateInput" value="@Model.BirthDate.ToString("dd/MM/yyyy", new System.Globalization.CultureInfo("en-GB"))"/>
                 </div>
             </div>
 
@@ -45,7 +47,12 @@
                 <div class="col-lg-offset-2 col-sm-10">
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="IsWorking" value="true" /> Nhân viên đang làm việc
+                            <input type="checkbox" name="IsWorking" value="@(Model.IsWorking ? "true" : "false")"
+                            @if (Model.IsWorking)
+                            {
+                                <text>checked</text>
+                            }
+                            /> Nhân viên đang làm việc
                         </label>
                     </div>
                 </div>
@@ -54,6 +61,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Ảnh cá nhân:</label>
                 <div class="col-sm-10">
+                    <input type="hidden" name="Photo" value="@Model.Photo" />
                     <input type="file" class="form-control" name="uploadPhoto" accept="image/*"
                            onchange="document.getElementById('Photo').src = window.URL.createObjectURL(this.files[0])" />
                 </div>
@@ -61,8 +69,7 @@
 
             <div class="form-group">
                 <div class="col-lg-offset-2 col-sm-10">
-                    <input type="hidden" name="Photo" value="me.jpg" />
-                    <img id="Photo" src="~/images/employees/me.jpg" class="img img-bordered" style="width:200px" />
+                    <img id="Photo" src="~/images/employees/@Model.Photo" class="img img-bordered" style="width:200px" />
                 </div>
             </div>
 

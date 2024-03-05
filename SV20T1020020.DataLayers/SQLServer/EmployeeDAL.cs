@@ -170,6 +170,7 @@ namespace SV20T1020020.DataLayers.SQLServer
                 {
                     EmployeeId = data.EmployeeId,
                     FullName = data.FullName ?? "",
+                    BirthDate = data.BirthDate,
                     Address = data.Address ?? "",
                     Phone = data.Phone ?? "",
                     Email = data.Email ?? "",

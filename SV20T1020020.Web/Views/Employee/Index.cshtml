@@ -25,7 +25,7 @@
         <!-- Hiển thị kết quả tìm kiếm -->
         <div>
             <p style="margin: 10px 0 10px 0">
-                Có <strong>1,024</strong> nhân viên trong tổng số <strong>100</strong> trang
+                Có <strong>@Model.RowCount</strong> nhân viên trong tổng số <strong>@Model.PageCount</strong> trang
             </p>
             <div class="row">
                 @foreach (var item in Model.Data)
@@ -48,12 +48,12 @@
                             <div class="box-body">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <img class="profile-user-img img-responsive img-bordered" src="~/images/employees/me.jpg">
+                                        <img class="profile-user-img img-responsive img-bordered" src="~/images/employees/@item.Photo">
                                     </div>
                                     <div class="col-sm-8">
                                         <ul class="list-group list-group-unbordered">
                                             <li class="list-group-item">
-                                                <i class="fa fa-birthday-cake"></i> @item.BirthDate
+                                                <i class="fa fa-birthday-cake"></i> @item.BirthDate.Date.ToString("dd/MM/yyyy")
                                             </li>
                                             <li class="list-group-item">
                                                 <i class="fa fa-phone"></i> @item.Phone

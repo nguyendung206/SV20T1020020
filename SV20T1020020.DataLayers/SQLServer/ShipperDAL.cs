@@ -50,7 +50,7 @@ namespace SV20T1020020.DataLayers.SQLServer
                 {
                     searchValue = searchValue ?? "",
                 };
-                count = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
+                count = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
             }
             return count;

@@ -6,7 +6,7 @@ namespace SV20T1020020.Web.Controllers
 {
     public class EmployeeController : Controller
     {
-        const int PAGE_SIZE = 20;
+        const int PAGE_SIZE = 12;
 
         public IActionResult Index(int page = 1, string searchValue = "")
         {
@@ -32,6 +32,8 @@ namespace SV20T1020020.Web.Controllers
             Employee model = new Employee()
             {
                 EmployeeId = 0,
+                BirthDate = new DateTime(1990, 1, 1),
+                Photo = "nophoto.png"
             };
             return View("Edit", model);
         }
@@ -44,15 +46,38 @@ namespace SV20T1020020.Web.Controllers
             {
                 return RedirectToAction("Index");
             }
-
+            if (String.IsNullOrEmpty(model.Photo))
+            {
+                model.Photo = "nophoto.png";
+            }
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Save(Employee data)
+        public IActionResult Save(Employee data, string birthDateInput, IFormFile? uploadPhoto)
         {
             try
             {
+                //Xử lý ngày sinh
+                DateTime? birthDate = birthDateInput.ToDateTime();
+                if (birthDate.HasValue)
+                {
+                    data.BirthDate = birthDate.Value;
+                }
+
+                //Xử lý ảnh upload (nếu có ảnh upload thì lưu ảnh và gán lại tên file ảnh mới cho employee
+                if (uploadPhoto != null)
+                {
+                    string fileName = $"{DateTime.Now.Ticks}_{uploadPhoto.FileName}"; //Tên file sẽ lưu
+                    string folder = Path.Combine(ApplicationContext.HostEnviroment.WebRootPath, "images\\employees");//đường dẫn đến thư mục lưu file
+                    string filePath = Path.Combine(folder, fileName); // đường dẫn đến file cần lưu
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        uploadPhoto.CopyTo(stream);
+                    }
+                    data.Photo = fileName;
+                };
+
                 if (data.EmployeeId == 0)
                 {
                     int id = CommonDataService.AddEmployee(data);
