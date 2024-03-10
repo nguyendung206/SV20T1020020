@@ -53,4 +53,8 @@ namespace SV20T1020020.Web.Models
     {
         public List<Employee> Data { get; set; }
     }
+    public class ProductSearchResult : BasePaginationResutlt
+    {
+        public List<Product> Data { get; set; }
+    }
 }

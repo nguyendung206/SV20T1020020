@@ -1,4 +1,5 @@
-﻿@{
+﻿@model SV20T1020020.Web.Models.ProductSearchResult
+@{
     ViewBag.Title = "Quản lý Mặt hàng";
 }
 
@@ -8,17 +9,21 @@
         <form id="formSearch" action="#">
             <div class="row">
                 <div class="col-sm-3">
-                    <select class="form-control" name="category">
+                    <select class="form-control" name="categoryId">
                         <option>-- Loại hàng --</option>
-                        <option>Thực phẩm</option>
-                        <option>Điện gia dụng</option>
+                        @foreach (var item in SV20T1020020.BusinessLayers.CommonDataService.ListOfCategory())
+                        {
+                            <option value="@item.CategoryId">@item.CategoryName</option>
+                        }
                     </select>
                 </div>
                 <div class="col-sm-3">
-                    <select class="form-control" name="supplier">
+                    <select class="form-control" name="supplierId">
                         <option>-- Nhà cung cấp --</option>
-                        <option>Công ty TNHH Hitech</option>
-                        <option>Vina Foods</option>
+                        @foreach (var item in SV20T1020020.BusinessLayers.CommonDataService.ListOfSupplier())
+                        {
+                            <option value="@item.SupplierId">@item.SupplierName</option>
+                        }
                     </select>
                 </div>
                 <div class="col-sm-6 input-group">
@@ -39,7 +44,7 @@
         <!-- Hiển thị kết quả tìm kiếm -->
         <div>
             <p style="margin: 10px 0 10px 0">
-                Có <strong>1,024</strong> mặt hàng trong tổng số <strong>100</strong> trang
+                Có <strong>@Model.RowCount</strong> mặt hàng trong tổng số <strong>@Model.PageCount</strong> trang
             </p>
             <div class="table-responsive">
                 <table class="table table-bordered table-hover table-striped">
@@ -53,20 +58,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (int i = 1; i <= 10; i++)
+                        @foreach (var item in Model.Data)
                         {
                             <tr>
                                 <td>
-                                    <img src="~/images/products/s24ultra.jpeg" style="width:100%" />
+                                    <img src="~/images/products/@item.Photo" style="width:100%" />
                                 </td>
-                                <td>Samsung S24 Ultra</td>
-                                <td>Cái</td>
-                                <td>40.000.000</td>
+                                <td>@item.ProductName</td>
+                                <td>@item.Unit</td>
+                                <td>@item.Price</td>
                                 <td class="text-center">
-                                    <a href="~/Product/Edit/123" class="btn btn-info btn-xs">
+                                    <a href="~/Product/Edit/@item.ProductId" class="btn btn-info btn-xs">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="~/Product/Delete/123" class="btn btn-danger btn-xs">
+                                    <a href="~/Product/Delete/@item.ProductId" class="btn btn-danger btn-xs">
                                         <i class="fa fa-remove"></i>
                                     </a>
                                 </td>
@@ -77,11 +82,17 @@
             </div>
             <div class="text-center">
                 <ul class="pagination">
-                    <li><a href="#">1</a></li>
-                    <li class="active"><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
+                    @for (int p = 1; p <= Model.PageCount; p++)
+                    {
+                        if (p == Model.Page)
+                        {
+                            <li class="active"><a href="#">@p</a></li>
+                        }
+                        else
+                        {
+                            <li><a href="~/Product?page=@p&searchValue=@Model.SearchValue">@p</a></li>
+                        }
+                    }
                 </ul>
             </div>
         </div>
