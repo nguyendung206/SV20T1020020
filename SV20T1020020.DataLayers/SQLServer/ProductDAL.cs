@@ -98,10 +98,18 @@ namespace SV20T1020020.DataLayers.SQLServer
             using (var connection = OpenConnection())
             {
                 var sql = @"select count(*) from Products 
-                                  where (@searchValue = N'') or (ProductName like @searchValue)";
+                                  where (@searchValue = N'') or (ProductName like @searchValue)
+                                        and (@CategoryID = 0 or CategoryID = @CategoryID)
+                                        and (@SupplierID = 0 or SupplierId = @SupplierID)
+                                        and (Price >= @MinPrice)
+                                        and (@MaxPrice <= 0 or Price <= @MaxPrice)";
                 var parameters = new
                 {
                     searchValue = searchValue ?? "",
+                    categoryId = categoryId,
+                    supplierId = supplierId,
+                    minPrice = minPrice,
+                    maxPrice = maxPrice
                 };
                 count = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();

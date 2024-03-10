@@ -1,14 +1,15 @@
-﻿@model SV20T1020020.Web.Models.ShipperSearchResult
+﻿@model PaginationSearchInput
 @{
     ViewBag.Title = "Quản lý Người giao hàng";
 }
 
 <div class="box box-primary">
     <div class="box-body">
-        <form id="formSearch" action="~/Shipper">
+        <form id="formSearch" action="~/Shipper/Search" method="get" data-container="#searchResult">
             <!-- Form nhập đầu vào tìm kiếm -->
             <div class="input-group">
-                <input name="searchValue" type="text" class="form-control"
+                <input type="hidden" name="@nameof(Model.PageSize)" value="@Model.PageSize" />
+                <input name="@nameof(Model.SearchValue)" type="text" class="form-control"
                        placeholder="Nhập tên người giao hàng cần tìm" value="@Model.SearchValue">
                 <div class="input-group-btn">
                     <button class="btn btn-info" type="submit">
@@ -23,53 +24,40 @@
         </form>
 
         <!-- Hiển thị kết quả tìm kiếm -->
-        <div>
-            <p style="margin: 10px 0 10px 0">
-                Có <strong>@Model.RowCount</strong> người giao hàng trong tổng số <strong>@Model.PageCount</strong> trang
-            </p>
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover table-striped">
-                    <thead class="bg-primary">
-                        <tr>
-                            <th>Tên người giao hàng</th>
-                            <th>Số điện thoại</th>
-                            <th style="width:80px"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Data)
-                        {
-                            <tr>
-                                <td>@item.ShipperName</td>
-                                <td>@item.Phone</td>
-                                <td class="text-center">
-                                    <a href="~/Shipper/Edit/@item.ShipperId" class="btn btn-info btn-xs">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a href="~/Shipper/Delete/@item.ShipperId" class="btn btn-danger btn-xs">
-                                        <i class="fa fa-remove"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <div class="text-center">
-                <ul class="pagination">
-                    @for (int p = 1; p <= Model.PageCount; p++)
-                    {
-                        if (p == Model.Page)
-                        {
-                            <li class="active"><a href="#">@p</a></li>
-                        }
-                        else
-                        {
-                            <li><a href="~/Shipper?page=@p&searchValue=@Model.SearchValue">@p</a></li>
-                        }
-                    }
-                </ul>
-            </div>
+        <div id="searchResult">
+            
         </div>
     </div>
 </div>
+@section scripts {
+    <script>
+        $(document).ready(function (e) {
+            $("#formSearch").submit(function (e) {
+                e.preventDefault();
+                doSearch(this, 1);
+                return;
+            });
+            doSearch("#formSearch", @Model.Page);
+        });
+        function doSearch(formSearch, page) {
+            var action = $(formSearch).prop("action");
+            var method = $(formSearch).prop("method");
+            var container = $(formSearch).data("container");
+
+            var searchData = $(formSearch).serializeArray();
+            searchData.push({ "name": "Page", "value": page });
+            $.ajax({
+                url: action,
+                type: method,
+                data: searchData,
+                async: false,
+                error: function () {
+                    alert("Your request is not valid!");
+                },
+                success: function (data) {
+                    $(container).html(data);
+                }
+            });
+        }
+    </script>
+}

@@ -1,27 +1,49 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SV20T1020020.BusinessLayers;
 using SV20T1020020.DomainModels;
+using SV20T1020020.Web.Models;
 
 namespace SV20T1020020.Web.Controllers
 {
     public class CategoryController : Controller
     {
-        const int PAGE_SIZE = 20;
+        private const int PAGE_SIZE = 20;
+        private const string CATEGORY_SEARCH = "category_search"; //Tên biến dùng để lưu trong session
 
         public IActionResult Index(int page = 1, string searchValue = "")
         {
-            int rowCount = 0;
-
-            var data = CommonDataService.ListOfCategories(out rowCount, page, PAGE_SIZE, searchValue ?? "");
-
-            var model = new Models.CategorySearchResult()
+            //Lấy đầu vào tìm kiếm hiện đang lưu lại trong session
+            PaginationSearchInput? input = ApplicationContext.GetSessionData<PaginationSearchInput>(CATEGORY_SEARCH);
+            //Trường hợp trong session chưa có điều kiền thì tạo điều kiện mới
+            if (input == null)
             {
-                Page = page,
-                PageSize = PAGE_SIZE,
-                SearchValue = searchValue ?? "",
+                input = new PaginationSearchInput()
+                {
+                    Page = 1,
+                    PageSize = PAGE_SIZE,
+                    SearchValue = ""
+                };
+            }
+
+
+            return View(input);
+        }
+
+        public IActionResult Search(PaginationSearchInput input)
+        {
+            int rowCount = 0;
+            var data = CommonDataService.ListOfCategories(out rowCount, input.Page, input.PageSize, input.SearchValue ?? "");
+            var model = new CategorySearchResult()
+            {
+                Page = input.Page,
+                PageSize = input.PageSize,
+                SearchValue = input.SearchValue ?? "",
                 RowCount = rowCount,
                 Data = data
             };
+
+            //Lưu lại điều kiện tìm kiếm session
+            ApplicationContext.SetSessionData(CATEGORY_SEARCH, input);
 
             return View(model);
         }
@@ -38,7 +60,7 @@ namespace SV20T1020020.Web.Controllers
 
         public IActionResult Edit(int id = 0)
         {
-            ViewBag.Title = "Cập nhật thông tin Người giao hàng";
+            ViewBag.Title = "Cập nhật thông tin Loại hàng";
             Category? model = CommonDataService.GetCategory(id);
             if (model == null)
             {
@@ -53,6 +75,13 @@ namespace SV20T1020020.Web.Controllers
         {
             try
             {
+                ViewBag.Title = data.CategoryId == 0 ? "Bổ sung Loại hàng" : "Cập nhật thông tin Loại hàng";
+                if (string.IsNullOrWhiteSpace(data.CategoryName))
+                    ModelState.AddModelError(nameof(data.CategoryName), "Tên không được để trống");
+                if (!ModelState.IsValid)
+                {
+                    return View("Edit", data);
+                }
                 if (data.CategoryId == 0)
                 {
                     int id = CommonDataService.AddCategory(data);
@@ -65,7 +94,8 @@ namespace SV20T1020020.Web.Controllers
             }
             catch (Exception ex)
             {
-                return Content(ex.Message);
+                ModelState.AddModelError("Error", "Không thể lưu được dữ liệu. Vui lòng thử lại sau vài phút");
+                return View("Edit", data);
             }
         }
 

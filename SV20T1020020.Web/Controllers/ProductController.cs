@@ -1,27 +1,51 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SV20T1020020.BusinessLayers;
 using SV20T1020020.DomainModels;
+using SV20T1020020.Web.Models;
 
 namespace SV20T1020020.Web.Controllers
 {
     public class ProductController : Controller
     {
-        const int PAGE_SIZE = 25;
+        private const int PAGE_SIZE = 25;
+        private const string PRODUCT_SEARCH = "product_search"; //Tên biến dùng để lưu trong session
 
         public IActionResult Index(int page = 1, string searchValue = "", int categoryId = 0, int supplierId = 0, decimal minPrice = 0, decimal maxPrice = 0)
         {
-            int rowCount = 0;
-
-            var data = ProductDataService.ListProducts(out rowCount, page, PAGE_SIZE, searchValue ?? "", categoryId , supplierId , minPrice , maxPrice );
-
-            var model = new Models.ProductSearchResult()
+            //Lấy đầu vào tìm kiếm hiện đang lưu lại trong session
+            ProductSearchInput? input = ApplicationContext.GetSessionData<ProductSearchInput>(PRODUCT_SEARCH);
+            //Trường hợp trong session chưa có điều kiền thì tạo điều kiện mới
+            if (input == null)
             {
-                Page = page,
-                PageSize = PAGE_SIZE,
-                SearchValue = searchValue ?? "",
+                input = new ProductSearchInput()
+                {
+                    Page = 1,
+                    PageSize = PAGE_SIZE,
+                    SearchValue = "",
+                    CategoryId = categoryId,
+                    SupplierId = supplierId
+                };
+            }
+
+
+            return View(input);
+        }
+
+        public IActionResult Search(ProductSearchInput input)
+        {
+            int rowCount = 0;
+            var data = ProductDataService.ListProducts(out rowCount, input.Page, PAGE_SIZE, input.SearchValue ?? "", input.CategoryId , input.SupplierId);
+            var model = new ProductSearchResult()
+            {
+                Page = input.Page,
+                PageSize = input.PageSize,
+                SearchValue = input.SearchValue ?? "",
                 RowCount = rowCount,
                 Data = data
             };
+
+            //Lưu lại điều kiện tìm kiếm session
+            ApplicationContext.SetSessionData(PRODUCT_SEARCH, input);
 
             return View(model);
         }
@@ -56,6 +80,25 @@ namespace SV20T1020020.Web.Controllers
         {
             try
             {
+                ViewBag.Title = data.ProductId == 0 ? "Bổ sung Mặt hàng" : "Cập nhật thông tin Mặt hàng";
+                ViewBag.IsEdit = data.ProductId == 0 ? false : true;
+                //Kiểm tra đầu vào và đưa các thông báo lỗi vào trong ModelState (nếu có)
+                if (string.IsNullOrWhiteSpace(data.ProductName))
+                    ModelState.AddModelError(nameof(data.ProductName), "Tên không được để trống");
+                if (data.CategoryId == 0)
+                    ModelState.AddModelError(nameof(data.CategoryId), "Vui lòng chọn loại hàng");
+                if (data.SupplierId == 0)
+                    ModelState.AddModelError(nameof(data.SupplierId), "Vui lòng chọn nhà cung cấp");
+                if (string.IsNullOrWhiteSpace(data.Unit))
+                    ModelState.AddModelError(nameof(data.Unit), "Đơn vị không được để trống");
+                if (data.Price <= 0)
+                    ModelState.AddModelError(nameof(data.Price), "Vui lòng nhập giá mặt hàng");
+
+                //Thông qua thuộc tính IsValid của ModelState  để kiểm tra xem có tồn tại lỗi hay không
+                if (!ModelState.IsValid)
+                {
+                    return View("Edit", data);
+                }
                 //Xử lý ảnh upload (nếu có ảnh upload thì lưu ảnh và gán lại tên file ảnh mới cho product
                 if (uploadPhoto != null)
                 {
@@ -81,7 +124,8 @@ namespace SV20T1020020.Web.Controllers
             }
             catch (Exception ex)
             {
-                return Content(ex.Message);
+                ModelState.AddModelError("Error", "Không thể lưu được dữ liệu. Vui lòng thử lại sau vài phút");
+                return View("Edit", data);
             }
         }
 
@@ -132,7 +176,17 @@ namespace SV20T1020020.Web.Controllers
         {
             try
             {
-                
+                ViewBag.Title = data.PhotoId == 0 ? "Bổ sung ảnh" : "Thay đổi ảnh";
+                //Kiểm tra đầu vào và đưa các thông báo lỗi vào trong ModelState (nếu có)
+                if (data.DisplayOrder <= 0)
+                    ModelState.AddModelError(nameof(data.DisplayOrder), "Vui lòng nhập vị trí của ảnh");
+
+                //Thông qua thuộc tính IsValid của ModelState  để kiểm tra xem có tồn tại lỗi hay không
+                if (!ModelState.IsValid)
+                {
+                    return View("Photo", data);
+                }
+
                 //Xử lý ảnh upload (nếu có ảnh upload thì lưu ảnh và gán lại tên file ảnh mới cho product
                 if (uploadPhoto != null)
                 {
@@ -171,11 +225,11 @@ namespace SV20T1020020.Web.Controllers
                         ProductId = id,
                         AttributeId = 0
                     };
-                    ViewBag.Title = "Bổ sung ảnh";
+                    ViewBag.Title = "Bổ sung Thuộc tính";
                     return View(model);
                 case "edit":
                     ProductAttribute? model1 = ProductDataService.GetAttribute(attributeId);
-                    ViewBag.Title = "Thay đổi ảnh";
+                    ViewBag.Title = "Thay đổi Thuộc tính";
                     return View(model1);
                 case "delete":
                     ProductDataService.DeleteAttribute(attributeId);
@@ -189,6 +243,20 @@ namespace SV20T1020020.Web.Controllers
         {
             try
             {
+                ViewBag.Title = data.AttributeId == 0 ? "Bổ sung Thuộc tính" : "Thay đổi Thuộc tính";
+                //Kiểm tra đầu vào và đưa các thông báo lỗi vào trong ModelState (nếu có)
+                if (string.IsNullOrWhiteSpace(data.AttributeName))
+                    ModelState.AddModelError(nameof(data.AttributeName), "Tên không được để trống");
+                if (string.IsNullOrWhiteSpace(data.AttributeValue))
+                    ModelState.AddModelError(nameof(data.AttributeValue), "Giá trị không được để trống");
+                if (data.DisplayOrder <= 0)
+                    ModelState.AddModelError(nameof(data.DisplayOrder), "Vui lòng nhập vị trí của ảnh");
+
+                //Thông qua thuộc tính IsValid của ModelState  để kiểm tra xem có tồn tại lỗi hay không
+                if (!ModelState.IsValid)
+                {
+                    return View("Attribute", data);
+                }
                 if (data.AttributeId == 0)
                 {
                     long id = ProductDataService.AddAttribute(data);
