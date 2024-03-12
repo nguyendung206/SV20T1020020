@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace SV20T1020020.Web.Controllers
 {
+    [Authorize(Roles = $"{WebUserRoles.Employee}")]
     public class OrderController : Controller
     {
         public IActionResult Index()
