@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SV20T1020020.BusinessLayers;
 using SV20T1020020.DomainModels;
 using SV20T1020020.Web.Models;
@@ -12,11 +13,11 @@ namespace SV20T1020020.Web.Controllers
         private const int PAGE_SIZE = 25;
         private const string PRODUCT_SEARCH = "product_search"; //Tên biến dùng để lưu trong session
 
-        public IActionResult Index(int page = 1, string searchValue = "", int categoryId = 0, int supplierId = 0, decimal minPrice = 0, decimal maxPrice = 0)
+        public IActionResult Index()
         {
-            //Lấy đầu vào tìm kiếm hiện đang lưu lại trong session
-            ProductSearchInput? input = ApplicationContext.GetSessionData<ProductSearchInput>(PRODUCT_SEARCH);
-            //Trường hợp trong session chưa có điều kiền thì tạo điều kiện mới
+            // Kiểm tra xem trong session có lưu điều kiện tìm kiếm không
+            // Nếu có thì sử dụng lại điều kiện tìm kiếm, ngược lại thì tìm kiếm theo điều kiện mặc định
+            Models.ProductSearchInput? input = ApplicationContext.GetSessionData<ProductSearchInput>(PRODUCT_SEARCH);
             if (input == null)
             {
                 input = new ProductSearchInput()
@@ -24,11 +25,10 @@ namespace SV20T1020020.Web.Controllers
                     Page = 1,
                     PageSize = PAGE_SIZE,
                     SearchValue = "",
-                    CategoryId = categoryId,
-                    SupplierId = supplierId
+                    CategoryId = 0,
+                    SupplierId = 0,
                 };
             }
-
 
             return View(input);
         }
@@ -36,19 +36,20 @@ namespace SV20T1020020.Web.Controllers
         public IActionResult Search(ProductSearchInput input)
         {
             int rowCount = 0;
-            var data = ProductDataService.ListProducts(out rowCount, input.Page, PAGE_SIZE, input.SearchValue ?? "", input.CategoryId , input.SupplierId);
+            var data = ProductDataService.ListProducts(out rowCount, input.Page, input.PageSize, input.SearchValue ?? "", input.CategoryId, input.SupplierId, 0, 0);
             var model = new ProductSearchResult()
             {
                 Page = input.Page,
                 PageSize = input.PageSize,
                 SearchValue = input.SearchValue ?? "",
                 RowCount = rowCount,
+                CategoryID = input.CategoryId,
+                SupplierID = input.SupplierId,
                 Data = data
             };
 
-            //Lưu lại điều kiện tìm kiếm session
+            // Lưu lại điều kiện tìm kiếm 
             ApplicationContext.SetSessionData(PRODUCT_SEARCH, input);
-
             return View(model);
         }
         public IActionResult Create()
@@ -93,9 +94,10 @@ namespace SV20T1020020.Web.Controllers
                     ModelState.AddModelError(nameof(data.SupplierId), "Vui lòng chọn nhà cung cấp");
                 if (string.IsNullOrWhiteSpace(data.Unit))
                     ModelState.AddModelError(nameof(data.Unit), "Đơn vị không được để trống");
-                if (data.Price <= 0)
+                if (string.IsNullOrWhiteSpace(data.Price.ToString()) || data.Price.ToString() == "0")
                     ModelState.AddModelError(nameof(data.Price), "Vui lòng nhập giá mặt hàng");
-
+                if(data.Price < 0)
+                    ModelState.AddModelError(nameof(data.Price), "Vui lòng nhập giá mặt hàng lớn hơn 0");
                 //Thông qua thuộc tính IsValid của ModelState  để kiểm tra xem có tồn tại lỗi hay không
                 if (!ModelState.IsValid)
                 {
@@ -180,9 +182,17 @@ namespace SV20T1020020.Web.Controllers
             {
                 ViewBag.Title = data.PhotoId == 0 ? "Bổ sung ảnh" : "Thay đổi ảnh";
                 //Kiểm tra đầu vào và đưa các thông báo lỗi vào trong ModelState (nếu có)
-                if (data.DisplayOrder <= 0)
+                if (string.IsNullOrWhiteSpace(data.DisplayOrder.ToString()) || data.DisplayOrder.ToString() == "0")
                     ModelState.AddModelError(nameof(data.DisplayOrder), "Vui lòng nhập vị trí của ảnh");
-
+                List<ProductPhoto> listPhotos = ProductDataService.ListPhotos(data.ProductId);
+                foreach (ProductPhoto item in listPhotos)
+                {
+                    if (data.DisplayOrder == item.DisplayOrder && data.PhotoId != item.PhotoId)
+                    {
+                        ModelState.AddModelError(nameof(data.DisplayOrder), $"Thứ tự hiển thị {data.DisplayOrder} không hợp lệ");
+                        break;
+                    }
+                }
                 //Thông qua thuộc tính IsValid của ModelState  để kiểm tra xem có tồn tại lỗi hay không
                 if (!ModelState.IsValid)
                 {
@@ -251,8 +261,17 @@ namespace SV20T1020020.Web.Controllers
                     ModelState.AddModelError(nameof(data.AttributeName), "Tên không được để trống");
                 if (string.IsNullOrWhiteSpace(data.AttributeValue))
                     ModelState.AddModelError(nameof(data.AttributeValue), "Giá trị không được để trống");
-                if (data.DisplayOrder <= 0)
+                if (string.IsNullOrWhiteSpace(data.DisplayOrder.ToString()) || data.DisplayOrder.ToString() == "0")
                     ModelState.AddModelError(nameof(data.DisplayOrder), "Vui lòng nhập vị trí của ảnh");
+                List<ProductAttribute> listAttributes = ProductDataService.ListAttributes(data.ProductId);
+                foreach (ProductAttribute item in listAttributes)
+                {
+                    if (data.DisplayOrder == item.DisplayOrder && data.AttributeId != item.AttributeId)
+                    {
+                        ModelState.AddModelError(nameof(data.DisplayOrder), $"Thứ tự hiển thị {data.DisplayOrder} không hợp lệ");
+                        break;
+                    }
+                }
 
                 //Thông qua thuộc tính IsValid của ModelState  để kiểm tra xem có tồn tại lỗi hay không
                 if (!ModelState.IsValid)

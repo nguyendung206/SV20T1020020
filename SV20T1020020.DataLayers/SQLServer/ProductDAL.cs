@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Dapper;
 using Azure;
 using System.Buffers;
+using System.Data;
 
 namespace SV20T1020020.DataLayers.SQLServer
 {
@@ -88,7 +89,7 @@ namespace SV20T1020020.DataLayers.SQLServer
             return id;
         }
 
-        public int Count(string searchValue = "", int categoryId = 0, int supplierId = 0, decimal minPrice = 0, decimal maxPrice = 0)
+        public int Count(string searchValue = "", int categoryID = 0, int supplierID = 0, decimal minPrice = 0, decimal maxPrice = 0)
         {
             int count = 0;
             if (!string.IsNullOrEmpty(searchValue))
@@ -97,22 +98,23 @@ namespace SV20T1020020.DataLayers.SQLServer
             }
             using (var connection = OpenConnection())
             {
-                var sql = @"select count(*) from Products 
-                                  where (@searchValue = N'') or (ProductName like @searchValue)
-                                        and (@CategoryID = 0 or CategoryID = @CategoryID)
-                                        and (@SupplierID = 0 or SupplierId = @SupplierID)
-                                        and (Price >= @MinPrice)
-                                        and (@MaxPrice <= 0 or Price <= @MaxPrice)";
+                var sql = @"SELECT COUNT(*) 
+                                    FROM Products 
+                                    WHERE (ProductName LIKE @SearchValue OR @SearchValue = N'')
+                                        AND (CategoryID = @CategoryID OR @CategoryID = 0)
+                                        AND (SupplierID = @SupplierID OR @SupplierID = 0)
+                                        AND (Price >= @MinPrice OR @MinPrice = 0)
+                                        AND (Price <= @MaxPrice OR @MaxPrice = 0)";
+
                 var parameters = new
                 {
                     searchValue = searchValue ?? "",
-                    categoryId = categoryId,
-                    supplierId = supplierId,
-                    minPrice = minPrice,
-                    maxPrice = maxPrice
+                    CategoryID = categoryID,
+                    SupplierID = supplierID,
+                    MinPrice = minPrice,
+                    MaxPrice = maxPrice
                 };
-                count = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
-                connection.Close();
+                count = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: CommandType.Text);
             }
             return count;
         }

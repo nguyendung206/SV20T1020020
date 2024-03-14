@@ -29,5 +29,7 @@ namespace SV20T1020020.DataLayers
         /// <param name="newPassword"></param>
         /// <returns></returns>
         bool ChangePassword(string userName, string oldPassword, string newPassword);
+
+        bool CheckPassword(string userName, string oldPassword);
     }
 }

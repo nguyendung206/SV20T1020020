@@ -50,5 +50,23 @@ namespace SV20T1020020.DataLayers.SQLServer
             }
             return result;
         }
+        public bool CheckPassword(string userName, string oldPassword)
+        {
+            bool result = false; // Ban đầu đặt result là false
+
+            using (var cn = OpenConnection())
+            {
+                var sql = @"SELECT COUNT(*) FROM employees WHERE Email = @Email AND Password = @OldPassword";
+                var parameters = new
+                {
+                    Email = userName,
+                    OldPassword = oldPassword
+                };
+                int count = cn.ExecuteScalar<int>(sql, parameters); 
+                result = count > 0; 
+            }
+
+            return result;
+        }
     }
 }

@@ -9,22 +9,10 @@
         <form id="formSearch" action="~/Product/Search" method="get" data-container="#searchResult">
             <div class="row">
                 <div class="col-sm-3">
-                    <select class="form-control" name="@nameof(Model.CategoryId)">
-                        <option>-- Loại hàng --</option>
-                        @foreach (var item in SV20T1020020.BusinessLayers.CommonDataService.ListOfCategory())
-                        {
-                            <option value="@item.CategoryId">@item.CategoryName</option>
-                        }
-                    </select>
+                    @Html.DropDownListFor(m => m.CategoryId, SelectListHelper.Categories(), new {@class = "form-control select2"})
                 </div>
                 <div class="col-sm-3">
-                    <select class="form-control" name="@nameof(Model.SupplierId)">
-                        <option>-- Nhà cung cấp --</option>
-                        @foreach (var item in SV20T1020020.BusinessLayers.CommonDataService.ListOfSupplier())
-                        {
-                            <option value="@item.SupplierId">@item.SupplierName</option>
-                        }
-                    </select>
+                    @Html.DropDownListFor(m => m.SupplierId, SelectListHelper.Suppliers(), new { @class = "form-control select2" })
                 </div>
                 <div class="col-sm-6 input-group">
                     <input type="hidden" name="@nameof(Model.PageSize)" value="@Model.PageSize" />
@@ -50,26 +38,31 @@
 </div>
 @section scripts {
     <script>
-        $(document).ready(function (e) {
+        $(document).ready(function () {
+            $("#CategoryID").change(function () {
+                doSearch("#formSearch", 1); // Gửi yêu cầu tìm kiếm khi giá trị thay đổi
+            });
+            $("#SupplierID").change(function () {
+                doSearch("#formSearch", 1); // Gửi yêu cầu tìm kiếm khi giá trị thay đổi
+            });
             $("#formSearch").submit(function (e) {
                 e.preventDefault();
                 doSearch(this, 1);
                 return;
             });
+
             doSearch("#formSearch", @Model.Page);
         });
-        function doSearch(formSearch, page) {
-            var action = $(formSearch).prop("action");
-            var method = $(formSearch).prop("method");
-            var container = $(formSearch).data("container");
 
-            var searchData = $(formSearch).serializeArray();
-            searchData.push({ "name": "Page", "value": page });
+        function doSearch(formSearchInput, page) {
+            var url = $(formSearchInput).prop("action");
+            var container = $(formSearchInput).data("container");
+            var postData = $(formSearchInput).serializeArray();
+            postData.push({ "name": "page", "value": page });
             $.ajax({
-                url: action,
-                type: method,
-                data: searchData,
-                async: false,
+                url: url,
+                type: "POST",
+                data: postData,
                 error: function () {
                     alert("Your request is not valid!");
                 },
@@ -77,6 +70,8 @@
                     $(container).html(data);
                 }
             });
+
+            return;
         }
     </script>
 }

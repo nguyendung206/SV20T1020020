@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SV20T1020020.BusinessLayers;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace SV20T1020020.Web.Controllers
 {
@@ -59,6 +60,39 @@ namespace SV20T1020020.Web.Controllers
             return RedirectToAction("Login");
         }
 
+        public IActionResult ChangePassword(string userName, string oldPassword, string newPassword)
+        {
+            if (HttpContext.Request.Method == "POST")
+            {
+                if (!UserAccountService.CheckPassword(userName, oldPassword))
+                {
+                    ModelState.AddModelError("OldPassword", "Mật khẩu cũ không chính xác.");
+                    return View();
+                }
+                if (string.IsNullOrEmpty(newPassword))
+                {
+                    ViewBag.OldPassword = oldPassword;
+                    ModelState.AddModelError("NewPassword", "Vui lòng nhập mật khẩu mới.");
+                    return View();
+                }
+                if (UserAccountService.CheckPassword(userName, newPassword))
+                {
+                    ViewBag.OldPassword = oldPassword;
+                    ModelState.AddModelError("NewPassword", "Mật khẩu mới không được trùng với mật khẩu cũ");
+                    return View();
+                }
+                UserAccountService.ChangePassword(userName, oldPassword, newPassword);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
+
+
+        public IActionResult AccessDenined()
+        {
+            return View();
+        }
     }
 }
 

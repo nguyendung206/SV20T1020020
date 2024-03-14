@@ -5,8 +5,8 @@
     /// </summary>
     public class PaginationSearchInput
     {
-        public int Page { get; set; } = 1;
-        public int PageSize { get; set; } = 0;
+        public int Page { get; set; } 
+        public int PageSize { get; set; } 
         public string SearchValue { get; set; } = "";
     }
 
@@ -15,8 +15,8 @@
     /// </summary>
     public class ProductSearchInput : PaginationSearchInput
     {
-        public int CategoryId { get; set; } = 0;
-        public int SupplierId {  get; set; } = 0;
+        public int CategoryId { get; set; }
+        public int SupplierId {  get; set; }
     }
 
 }
