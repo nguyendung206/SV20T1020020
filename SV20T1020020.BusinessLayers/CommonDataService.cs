@@ -27,7 +27,7 @@ namespace SV20T1020020.BusinessLayers
         /// </summary>
         static CommonDataService()
         {
-            string connectionString = Configuration.ConnectiongString;
+            string connectionString = Configuration.ConnectingString;
             provinceDB = new ProvinceDAL(connectionString);
             customerDB = new CustomerDAL(connectionString);
             categoryDB = new CategoryDAL(connectionString);
@@ -53,6 +53,14 @@ namespace SV20T1020020.BusinessLayers
         public static List<Category> ListOfCategory()
         {
             return categoryDB.List().ToList();
+        }
+        public static List<Customer> ListOfCustomer()
+        {
+            return customerDB.List().ToList();
+        }
+        public static List<Shipper> ListOfShipper()
+        {
+            return shipperDB.List().ToList();
         }
         /// <summary>
         /// Tìm kiếm và lấy danh sách khách hàng

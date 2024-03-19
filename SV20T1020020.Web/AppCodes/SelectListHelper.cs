@@ -11,7 +11,7 @@ namespace SV20T1020020.Web
         /// <returns></returns>
         public static List<SelectListItem> Provinces()
         {
-            List<SelectListItem > list = new List<SelectListItem>();
+            List<SelectListItem> list = new List<SelectListItem>();
             list.Add(new SelectListItem()
             {
                 Value = "",

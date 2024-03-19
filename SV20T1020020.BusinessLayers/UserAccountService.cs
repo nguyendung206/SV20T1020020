@@ -14,7 +14,7 @@ namespace SV20T1020020.BusinessLayers
         private static readonly IUserAccountDAL employeeAccountDB;
         static UserAccountService()
         {
-            string connectionString = Configuration.ConnectiongString;
+            string connectionString = Configuration.ConnectingString;
             employeeAccountDB = new EmployeeAccountDAL(connectionString);
         }
         public static UserAccount? Authorize(string userName, string password)

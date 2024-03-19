@@ -14,16 +14,16 @@ namespace SV20T1020020.BusinessLayers
         /// <summary>
         /// Chuỗi kết thông số kết nối đến CSDL
         /// </summary>
-        public static string ConnectiongString { get; private set; } = "";
+        public static string ConnectingString { get; private set; } = "";
 
         /// <summary>
         /// Khởi tạo cấu hình cho BussinessLayer
         /// (Hàm này phải được gọi trước khi ứng dụng chạy)
         /// </summary>
         /// <param name="connectiongString"></param>
-        public static void Initialize(string connectiongString)
+        public static void Initialize(string connectionString)
         {
-            Configuration.ConnectiongString = connectiongString;
+            Configuration.ConnectingString = connectionString;
         }
     }
 }
