@@ -53,5 +53,7 @@ namespace SV20T1020020.DataLayers
         /// Xóa 1 mặt hàng ra khỏi đơn hàng
         /// </summary>
         bool DeleteDetail(int orderId, int productId);
+
+        bool SaveAddress(int orderId, string deliveryProvince, string deliveryAddress);
     }
 }

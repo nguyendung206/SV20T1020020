@@ -24,8 +24,8 @@ namespace SV20T1020020.DataLayers.SQLServer
                                     select -1
                                 else
                                     begin
-                                        insert into Employees(FullName,BirthDate,Address,Phone,Email,Photo,IsWorking)
-                                        values(@FullName,@BirthDate,@Address,@Phone,@Email,@Photo,@IsWorking);
+                                        insert into Employees(FullName,BirthDate,Address,Phone,Email,Photo,IsWorking,RoleNames)
+                                        values(@FullName,@BirthDate,@Address,@Phone,@Email,@Photo,@IsWorking,@RoleNames);
                                         select @@identity;
                                     end";
                 var parameters = new
@@ -36,7 +36,8 @@ namespace SV20T1020020.DataLayers.SQLServer
                     Phone = data.Phone ?? "",
                     Email = data.Email ?? "",
                     Photo = data.Photo ?? "",
-                    IsWorking = data.IsWorking
+                    IsWorking = data.IsWorking,
+                    RoleNames = data.RoleNames ?? ""
                 };
                 id = connection.ExecuteScalar<int>(sql: sql, param: parameters, commandType: System.Data.CommandType.Text);
                 connection.Close();
@@ -163,7 +164,8 @@ namespace SV20T1020020.DataLayers.SQLServer
                                             Phone = @phone,
                                             Email = @email,
                                             Photo = @photo,
-                                            IsWorking = @isworking
+                                            IsWorking = @isworking,
+                                            RoleNames = @RoleNames
                                         where EmployeeId = @EmployeeId
                                     end";
                 var parameters = new
@@ -176,6 +178,7 @@ namespace SV20T1020020.DataLayers.SQLServer
                     Email = data.Email ?? "",
                     Photo = data.Photo ?? "",
                     IsWorking = data.IsWorking,
+                    RoleNames = data.RoleNames ?? ""
                 };
                 result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
                 connection.Close();

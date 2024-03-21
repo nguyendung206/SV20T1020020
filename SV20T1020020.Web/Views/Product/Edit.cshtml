@@ -93,14 +93,7 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-sm-10">
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="IsSelling" value="@(Model.IsSelling ? "true" : "false")"
-                            @if (Model.IsSelling)
-                            {
-                                <text>checked</text>
-                            }
-                            /> Hiện đang được bán
-                        </label>
+                        <label><input type="checkbox" value="true" @(Model.IsSelling ? "checked" : "") name="IsSelling" id="isSellingCheckbox">Hiện đang được bán</label>
                     </div>
                 </div>
             </div>
@@ -242,3 +235,12 @@
     </div>
 
 }
+<script>
+    document.getElementById("isSellingCheckbox").addEventListener("change", function () {
+        if (this.checked) {
+            this.value = "true";
+        } else {
+            this.value = "false";
+        }
+    });
+</script>

@@ -225,6 +225,30 @@ namespace SV20T1020020.DataLayers.SQLServer
             return list;
         }
 
+        public bool SaveAddress(int orderId, string deliveryProvince, string deliveryAddress)
+        {
+            bool result = false;
+            using (var connection = OpenConnection())
+            {
+                var sql = @"if exists(select * from Orders
+                                            where OrderID = @OrderID)
+                                    update Orders
+                                    set DeliveryProvince = @DeliveryProvince,
+                                        DeliveryAddress = @DeliveryAddress
+                                    where OrderID = @OrderID
+                               ";
+                var parameters = new
+                {
+                    OrderID = orderId,
+                    DeliveryProvince = deliveryProvince,
+                    DeliveryAddress = deliveryAddress
+                };
+                result = connection.Execute(sql: sql, param: parameters, commandType: System.Data.CommandType.Text) > 0;
+                connection.Close();
+            }
+            return result;
+        }
+
         public bool SaveDetail(int orderId, int productId, int quantity, decimal salePrice)
         {
             bool result = false;

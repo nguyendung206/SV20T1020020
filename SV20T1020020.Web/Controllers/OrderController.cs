@@ -189,7 +189,24 @@ namespace SV20T1020020.Web.Controllers
 
             return Json("");
         }
+        [HttpGet]
+        public IActionResult Address(int id = 0)
+        {
+            ViewBag.OrderID = id;
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Address(int id = 0, string deliveryProvince = "", string deliveryAddress = "")
+        {
+            if (deliveryProvince == null || deliveryAddress == null)
+                return Json("Vui lòng nhập đầy đủ thông tin");
 
+            bool result = OrderDataService.SaveOrderAddress(id, deliveryProvince, deliveryAddress);
+            if (!result)
+                return Json("Đơn hàng không cho phép thay đổi địa chỉ giao hàng");
+
+            return Json("");
+        }
         /// <summary>
         /// Xóa mặt hàng ra khỏi đơn hàng
         /// </summary>

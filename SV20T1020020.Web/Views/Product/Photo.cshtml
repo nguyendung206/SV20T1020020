@@ -42,14 +42,7 @@
             <div class="form-group">
                 <div class="col-lg-offset-2 col-sm-10">
                     <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="IsHidden" value="@(Model.IsHidden ? "true" : "false")"
-                            @if (Model.IsHidden)
-                            {
-                                <text>checked</text>
-                            }
-                            /> Không hiển thị ảnh
-                        </label>
+                        <input type="checkbox" value="true" @(Model.IsHidden ? "checked" : "") name="IsHidden" id="isHiddenCheckbox">Hiển thị ảnh
                     </div>
                 </div>
             </div>
@@ -68,3 +61,12 @@
 
     </div>
 </div>
+<script>
+    document.getElementById("isHiddenCheckbox").addEventListener("change", function () {
+        if (this.checked) {
+            this.value = "true";
+        } else {
+            this.value = "false";
+        }
+    });
+</script>
