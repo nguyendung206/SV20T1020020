@@ -36,7 +36,7 @@
                 <label class="control-label col-sm-2">Loại hàng:</label>
                 <div class="col-sm-10">
                     <select class="form-control" name="CategoryId">
-                        <option value= "0">-- Loại hàng --</option>
+                        <option value="0">-- Loại hàng --</option>
                         @foreach (var item in SV20T1020020.BusinessLayers.CommonDataService.ListOfCategory())
                         {
                             if (item.CategoryId == Model.CategoryId)
@@ -161,13 +161,22 @@
                     {
                         <tr>
                             <td style="vertical-align:middle">
-                                <img src="~/Images/Products/@p.Photo"  style="width:100px" />
+                                <img src="~/Images/Products/@p.Photo" style="width:100px" />
                             </td>
                             <td style="vertical-align:middle;">
                                 @p.Description
                             </td>
                             <td style="vertical-align:middle;">@p.DisplayOrder</td>
-                            <td style="vertical-align:middle;">@p.IsHidden</td>
+                            <td style="vertical-align: middle;">
+                                @if (p.IsHidden)
+                                {
+                                    <span>Ẩn</span>
+                                }
+                                else
+                                {
+                                    <span>Không ẩn</span>
+                                }
+                            </td>
                             <td style="vertical-align:middle; text-align:right">
                                 <a class="btn btn-xs btn-primary" href="~/Product/Photo/@p.ProductId?method=edit&photoId=@p.PhotoId">
                                     <i class="fa fa-edit"></i>

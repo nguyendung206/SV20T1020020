@@ -39,7 +39,7 @@ namespace SV20T1020020.Web.Controllers
                     SearchValue = "",
                     Status = 0,
                     DateRange = string.Format("{0:dd/MM/yyyy} - {1:dd/MM/yyyy}",
-                                                DateTime.Today.AddMonths(-1),
+                                                DateTime.Today.AddMonths(-40),
                                                 DateTime.Today)
                 };
             }

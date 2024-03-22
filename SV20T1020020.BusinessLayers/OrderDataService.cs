@@ -22,9 +22,7 @@ namespace SV20T1020020.BusinessLayers
         /// Tìm kiếm và lấy danh sách đơn hàng dưới dạng phân trang
         /// </summary>
         public static List<Order> ListOrders(out int rowCount, int page = 1, int pageSize = 0,
-        int status = 0, DateTime? fromTime = null, DateTime? toTime = null,
-
-        string searchValue = "")
+        int status = 0, DateTime? fromTime = null, DateTime? toTime = null, string searchValue = "")
         {
             rowCount = orderDB.Count(status, fromTime, toTime, searchValue);
             return orderDB.List(page, pageSize, status, fromTime, toTime, searchValue).ToList();

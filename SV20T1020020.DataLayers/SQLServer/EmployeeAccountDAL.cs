@@ -19,13 +19,13 @@ namespace SV20T1020020.DataLayers.SQLServer
             using (var cn = OpenConnection())
             {
                 var sql = @"; select EmployeeID as UserID, Email as UserName, FullName, Email, Photo, Password, RoleNames
-                                from Employees where Email = @Email AND Password = @Password " ;
+                                from Employees where Email = @Email AND Password = @Password ";
                 var parameters = new
                 {
                     Email = userName,
                     Password = password,
                 };
-                data = cn.QuerySingleOrDefault<UserAccount> (sql, parameters);
+                data = cn.QuerySingleOrDefault<UserAccount>(sql, parameters);
 
                 cn.Close();
             }
@@ -38,7 +38,7 @@ namespace SV20T1020020.DataLayers.SQLServer
             {
                 var sql = @"; update Employees
                                     set Password = @NewPassword
-                                    where Email = @Email and Password = @OldPassword " ;
+                                    where Email = @Email and Password = @OldPassword ";
                 var parameters = new
                 {
                     Email = userName,
@@ -62,8 +62,8 @@ namespace SV20T1020020.DataLayers.SQLServer
                     Email = userName,
                     OldPassword = oldPassword
                 };
-                int count = cn.ExecuteScalar<int>(sql, parameters); 
-                result = count > 0; 
+                int count = cn.ExecuteScalar<int>(sql, parameters);
+                result = count > 0;
             }
 
             return result;

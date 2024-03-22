@@ -24,8 +24,8 @@ namespace SV20T1020020.DataLayers.SQLServer
                                     select -1
                                 else
                                     begin
-                                        insert into Employees(FullName,BirthDate,Address,Phone,Email,Photo,IsWorking,RoleNames)
-                                        values(@FullName,@BirthDate,@Address,@Phone,@Email,@Photo,@IsWorking,@RoleNames);
+                                        insert into Employees(FullName,BirthDate,Address,Phone,Email,Photo,IsWorking,Password,RoleNames)
+                                        values(@FullName,@BirthDate,@Address,@Phone,@Email,@Photo,@IsWorking,1,@RoleNames);
                                         select @@identity;
                                     end";
                 var parameters = new
