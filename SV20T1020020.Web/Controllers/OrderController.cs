@@ -410,5 +410,11 @@ namespace SV20T1020020.Web.Controllers
             return Json(orderID);
         }
 
+
+        /*public IActionResult AddMoreProduct()
+        {
+            ViewBag.Title = "Bổ sung";
+            return RedirectToAction("Create");
+        }*/
     }
 }

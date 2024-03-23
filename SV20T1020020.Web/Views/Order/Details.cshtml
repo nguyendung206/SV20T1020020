@@ -134,7 +134,10 @@
     <div class="box-body">
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover">
-                <caption><h4>Danh sách mặt hàng thuộc đơn hàng</h4></caption>
+                <caption>
+                    <h4>Danh sách mặt hàng thuộc đơn hàng</h4> 
+                    @* <a href="~/Order/AddMoreProduct">thêm hàng</a> *@
+                </caption>
                 <thead>
                     <tr class="bg-primary">
                         <th class="text-center">STT</th>
@@ -153,9 +156,11 @@
                     @foreach (var item in Model.Details.ToList())
                     {
                         <tr>
-                            <td class="text-center">@{
+                            <td class="text-center">
+                                @{
                                     STT += 1;
-                                }@STT</td>
+                                }@STT
+                            </td>
                             <td>@item.ProductName</td>
                             <td class="text-center">@item.Unit</td>
                             <td class="text-center">@item.Quantity</td>

@@ -86,8 +86,8 @@
                             </div>
                         </div>
                     </div>
+                    @Html.ValidationMessage(nameof(Model.RoleNames), new { @style = "color: #f00" })
                 </div>
-                @Html.ValidationMessage(nameof(Model.RoleNames), new { @style = "color: #f00" })
             </div>
             <div class="form-group">
                 @Html.ValidationMessage("Error", new { @style = "color: #f00" })
