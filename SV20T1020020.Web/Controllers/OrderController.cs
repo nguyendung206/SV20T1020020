@@ -11,7 +11,7 @@ namespace SV20T1020020.Web.Controllers
     public class OrderController : Controller
     {
         //Số dòng trên 1 trang khi hiển thị danh sách đơn hàng
-        private const int ORDER_PAGE_SIZE = 25;
+        private const int ORDER_PAGE_SIZE = 35;
         //Tên biến session để lưu điều kiện tìm kiếm đơn hàng
         private const string ORDER_SEARCH = "order_search";
 

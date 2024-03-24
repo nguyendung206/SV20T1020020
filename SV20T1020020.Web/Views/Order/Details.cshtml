@@ -146,7 +146,10 @@
                         <th class="text-center">Số lượng</th>
                         <th class="text-center">Giá</th>
                         <th class="text-center">Thành tiền</th>
-                        <th style="width:80px"></th>
+                        @if (Model.Order.Status == 1 || Model.Order.Status == 2)
+                        {
+                            <th style="width:80px"></th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -167,14 +170,17 @@
                             <td class="text-right">@item.SalePrice</td>
                             <td class="text-right">@item.TotalPrice</td>
                             <td class="text-right">
-                                @if (Model.Order.Status == 1)
+                                @if (Model.Order.Status == 1 || Model.Order.Status == 2)
                                 {
                                     <a href="~/Order/EditDetail/@Model.Order.OrderId?productId=@item.ProductId" class="btn btn-xs btn-primary btn-modal">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a href="~/Order/DeleteDetail/@Model.Order.OrderId?productId=@item.ProductId" class="btn btn-xs btn-danger" onclick="return confirm('Xóa mặt hàng này khỏi đơn hàng?')">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
+                                    @if(Model.Details.Count() > 1)
+                                    {
+                                        <a href="~/Order/DeleteDetail/@Model.Order.OrderId?productId=@item.ProductId" class="btn btn-xs btn-danger" onclick="return confirm('Xóa mặt hàng này khỏi đơn hàng?')">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    }
                                 }
                             </td>
                         </tr>

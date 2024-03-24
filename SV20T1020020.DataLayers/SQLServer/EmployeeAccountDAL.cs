@@ -52,7 +52,7 @@ namespace SV20T1020020.DataLayers.SQLServer
         }
         public bool CheckPassword(string userName, string oldPassword)
         {
-            bool result = false; // Ban đầu đặt result là false
+            bool result = false; 
 
             using (var cn = OpenConnection())
             {

@@ -103,8 +103,6 @@ namespace SV20T1020020.Web.Controllers
             return View();
         }
 
-
-
         public IActionResult AccessDenined()
         {
             return View();
