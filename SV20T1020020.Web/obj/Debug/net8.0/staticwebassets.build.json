@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/l+bU1picviCe97elWmJv6tFOABo3Qwo3uewTa0kn1A=",
+  "Hash": "KCMz/grNGyIdWHvKVntrGjl2/MJtuRYyz6wSOiVGsbw=",
   "Source": "SV20T1020020.Web",
   "BasePath": "_content/SV20T1020020.Web",
   "Mode": "Default",
@@ -243,6 +243,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\employees\\638467203334245215_milktea4.png"
+    },
+    {
+      "Identity": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\employees\\638469981998931884_z4669797822112_ec9be59f80d1404090865ee29455cee5.jpg",
+      "SourceId": "SV20T1020020.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\",
+      "BasePath": "_content/SV20T1020020.Web",
+      "RelativePath": "images/employees/638469981998931884_z4669797822112_ec9be59f80d1404090865ee29455cee5.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\employees\\638469981998931884_z4669797822112_ec9be59f80d1404090865ee29455cee5.jpg"
     },
     {
       "Identity": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\employees\\me.jpg",

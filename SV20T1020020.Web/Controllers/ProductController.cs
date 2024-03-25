@@ -58,6 +58,7 @@ namespace SV20T1020020.Web.Controllers
             Product model = new Product()
             {
                 ProductId = 0,
+                Photo = "noproduct.png"
             };
             ViewBag.IsEdit = false;//viết tạm
             return View("Edit", model);
@@ -159,7 +160,8 @@ namespace SV20T1020020.Web.Controllers
                     ProductPhoto model = new ProductPhoto()
                     {
                         ProductId = id,
-                        PhotoId = 0
+                        PhotoId = 0,
+                        Photo = "noproduct.png"
                     };
                     ViewBag.Title = "Bổ sung ảnh";
                     return View(model);
