@@ -161,7 +161,8 @@ namespace SV20T1020020.Web.Controllers
                     {
                         ProductId = id,
                         PhotoId = 0,
-                        Photo = "noproduct.png"
+                        Photo = "noproduct.png",
+                        IsHidden = true
                     };
                     ViewBag.Title = "Bổ sung ảnh";
                     return View(model);
@@ -186,6 +187,8 @@ namespace SV20T1020020.Web.Controllers
                 //Kiểm tra đầu vào và đưa các thông báo lỗi vào trong ModelState (nếu có)
                 if (string.IsNullOrWhiteSpace(data.DisplayOrder.ToString()) || data.DisplayOrder.ToString() == "0")
                     ModelState.AddModelError(nameof(data.DisplayOrder), "Vui lòng nhập vị trí của ảnh");
+                if (data.DisplayOrder < 1)
+                    ModelState.AddModelError(nameof(data.DisplayOrder), "Vui lòng nhập vị trí của ảnh lớn hơn 1");
                 List<ProductPhoto> listPhotos = ProductDataService.ListPhotos(data.ProductId);
                 foreach (ProductPhoto item in listPhotos)
                 {
@@ -264,7 +267,9 @@ namespace SV20T1020020.Web.Controllers
                 if (string.IsNullOrWhiteSpace(data.AttributeValue))
                     ModelState.AddModelError(nameof(data.AttributeValue), "Giá trị không được để trống");
                 if (string.IsNullOrWhiteSpace(data.DisplayOrder.ToString()) || data.DisplayOrder.ToString() == "0")
-                    ModelState.AddModelError(nameof(data.DisplayOrder), "Vui lòng nhập vị trí của ảnh");
+                    ModelState.AddModelError(nameof(data.DisplayOrder), "Vui lòng nhập vị trí của ảnh"); 
+                if (data.DisplayOrder < 1)
+                    ModelState.AddModelError(nameof(data.DisplayOrder), "Vui lòng nhập vị trí của ảnh lớn hơn 1");
                 List<ProductAttribute> listAttributes = ProductDataService.ListAttributes(data.ProductId);
                 foreach (ProductAttribute item in listAttributes)
                 {

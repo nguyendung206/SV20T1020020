@@ -180,8 +180,8 @@
                             <td>@item.ProductName</td>
                             <td class="text-center">@item.Unit</td>
                             <td class="text-center">@item.Quantity</td>
-                            <td class="text-right">@item.SalePrice</td>
-                            <td class="text-right">@item.TotalPrice</td>
+                            <td class="text-right">@String.Format("{0:N0}", item.SalePrice)</td>
+                            <td class="text-right">@String.Format("{0:N0}", @item.TotalPrice)</td>
                             @if ((Model.Order.Status == 1 || Model.Order.Status == 2) && userData.UserId == (Model.Order.EmployeeId).ToString())
                             {
                                 <td class="text-center">
@@ -202,7 +202,7 @@
                 <tfoot>
                     <tr>
                         <th colspan="5" class="text-right">Tổng cộng:</th>
-                        <th class="text-right">@Model.Details.Sum(item => item.TotalPrice)</th>
+                        <th class="text-right">@String.Format("{0:N0}", @Model.Details.Sum(item => item.TotalPrice))đ</th>
                         <th></th>
                     </tr>
                 </tfoot>

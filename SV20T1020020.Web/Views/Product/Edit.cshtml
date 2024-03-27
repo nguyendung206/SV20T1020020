@@ -85,7 +85,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">Giá hàng:</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" name="Price" value="@Model.Price">
+                    <input type="text" class="form-control" name="Price" value="@String.Format("{0:N0}", Model.Price)">
                     @Html.ValidationMessage(nameof(Model.Price), new { @style = "color: #f00" })
                 </div>
             </div>
@@ -171,11 +171,11 @@
                             <td style="vertical-align: middle;">
                                 @if (p.IsHidden)
                                 {
-                                    <span>Ẩn</span>
+                                    <span>Không ẩn</span>
                                 }
                                 else
                                 {
-                                    <span>Không ẩn</span>
+                                    <span>Ẩn</span>
                                 }
                             </td>
                             <td style="vertical-align:middle; text-align:right">

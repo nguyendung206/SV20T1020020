@@ -25,7 +25,7 @@
                     </td>
                     <td>@item.ProductName</td>
                     <td>@item.Unit</td>
-                    <td>@item.Price</td>
+                    <td>@String.Format("{0:N0}", item.Price)đ</td>
                     <td class="text-center">
                         <a href="~/Product/Edit/@item.ProductId" class="btn btn-info btn-xs">
                             <i class="fa fa-edit"></i>
