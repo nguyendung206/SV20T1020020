@@ -13,6 +13,14 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\categories\\mitom.png",
+      "PackagePath": "staticwebassets\\images\\categories\\mitom.png"
+    },
+    {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\categories\\nocategory.png",
+      "PackagePath": "staticwebassets\\images\\categories\\nocategory.png"
+    },
+    {
       "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\employees\\638452303959952470_419450363_749898936608218_2506936256383736047_n.jpg",
       "PackagePath": "staticwebassets\\images\\employees\\638452303959952470_419450363_749898936608218_2506936256383736047_n.jpg"
     },
@@ -43,6 +51,14 @@
     {
       "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\employees\\638471749210235701_z4372828299460_b18558a6e78ef823a88fa1b4c2369f6d.jpg",
       "PackagePath": "staticwebassets\\images\\employees\\638471749210235701_z4372828299460_b18558a6e78ef823a88fa1b4c2369f6d.jpg"
+    },
+    {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\employees\\638472299477737364_z4372828299460_b18558a6e78ef823a88fa1b4c2369f6d.jpg",
+      "PackagePath": "staticwebassets\\images\\employees\\638472299477737364_z4372828299460_b18558a6e78ef823a88fa1b4c2369f6d.jpg"
+    },
+    {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\employees\\638472299633943016_z3729240609183_7b7feb895b3fbf988de06e2767955fcf.jpg",
+      "PackagePath": "staticwebassets\\images\\employees\\638472299633943016_z3729240609183_7b7feb895b3fbf988de06e2767955fcf.jpg"
     },
     {
       "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\employees\\me.jpg",
@@ -163,6 +179,26 @@
     {
       "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\products\\638471756019616693_z4372828299460_b18558a6e78ef823a88fa1b4c2369f6d.jpg",
       "PackagePath": "staticwebassets\\images\\products\\638471756019616693_z4372828299460_b18558a6e78ef823a88fa1b4c2369f6d.jpg"
+    },
+    {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\products\\638472310757855120_milktea2.png",
+      "PackagePath": "staticwebassets\\images\\products\\638472310757855120_milktea2.png"
+    },
+    {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\products\\638472333791648092_mitom.png",
+      "PackagePath": "staticwebassets\\images\\products\\638472333791648092_mitom.png"
+    },
+    {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\products\\638472333879677982_638472310757855120_milktea2.png",
+      "PackagePath": "staticwebassets\\images\\products\\638472333879677982_638472310757855120_milktea2.png"
+    },
+    {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\products\\638472340137532446_638472333791648092_mitom.png",
+      "PackagePath": "staticwebassets\\images\\products\\638472340137532446_638472333791648092_mitom.png"
+    },
+    {
+      "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\products\\mitom.png",
+      "PackagePath": "staticwebassets\\images\\products\\mitom.png"
     },
     {
       "Id": "D:\\LapTrinhWeb\\SV20T1020020\\SV20T1020020.Web\\wwwroot\\images\\products\\noproduct.png",

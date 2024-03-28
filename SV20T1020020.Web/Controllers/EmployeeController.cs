@@ -57,7 +57,8 @@ namespace SV20T1020020.Web.Controllers
             {
                 EmployeeId = 0,
                 BirthDate = new DateTime(1990, 1, 1),
-                Photo = "nophoto.png"
+                Photo = "nophoto.png",
+                RoleNames = "employee"
             };
             return View("Edit", model);
         }
